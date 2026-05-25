@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Botonera Gaming Touch</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Orbitron', 'Arial Black', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        .grid-container {
+            display: flex;
+            gap: 12px;
+            padding: 15px;
+            background-color: rgba(10, 10, 10, 0.8);
+            border-radius: 12px;
+            overflow-x: auto;
+            max-width: 100vw;
+        }
+
+        .btn-gaming {
+            width: 85px;
+            height: 105px;
+            background-color: #111;
+            border: 3px solid #d4af37;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.05s ease, box-shadow 0.05s ease;
+            box-shadow: 0px 4px 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-gaming:active {
+            transform: scale(0.95);
+            box-shadow: 0px 0px 15px rgba(212, 175, 55, 0.6);
+            background-color: #222;
+        }
+
+        .btn-icon {
+            width: 100%;
+            height: 70px;
+            background-size: cover;      /* Ajusta la imagen para cubrir todo el espacio */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat;
+        }
+
+        /* VINCULACIÓN DE IMÁGENES PERSONALIZADAS */
+        /* Si tus imágenes son .jpg en vez de .png, cambia la extensión abajo */
+        .icon-lp { background-image: url('lp.png'); }
+        .icon-sword { background-image: url('sword.png'); }
+        .icon-fist { background-image: url('fist.png'); }
+        .icon-fire { background-image: url('fire.png'); }
+        .icon-shield { background-image: url('shield.png'); }
+        .icon-arrows { background-image: url('arrows.png'); }
+
+        .btn-status {
+            width: 100%;
+            height: 30px;
+            background-color: #000000;
+            border-top: 2px solid #d4af37;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #e0f000;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid-container">
+        <div class="btn-gaming" onclick="triggerAction('LP')">
+            <div class="btn-icon icon-lp"></div>
+            <div class="btn-status" id="status-lp">ON</div>
+        </div>
+
+        <div class="btn-gaming" onclick="triggerAction('Espada')">
+            <div class="btn-icon icon-sword"></div>
+            <div class="btn-status" id="count-sword">0/4</div>
+        </div>
+
+        <div class="btn-gaming" onclick="triggerAction('Puño')">
+            <div class="btn-icon icon-fist"></div>
+            <div class="btn-status" id="count-fist">0/1</div>
+        </div>
+
+        <div class="btn-gaming" onclick="triggerAction('Fuego')">
+            <div class="btn-icon icon-fire"></div>
+            <div class="btn-status" id="count-fire">0/1</div>
+        </div>
+
+        <div class="btn-gaming" onclick="triggerAction('Escudo')">
+            <div class="btn-icon icon-shield"></div>
+            <div class="btn-status" id="count-shield">0/1</div>
+        </div>
+
+        <div class="btn-gaming" onclick="triggerAction('Flechas')">
+            <div class="btn-icon icon-arrows"></div>
+            <div class="btn-status" id="count-arrows">0/15</div>
+        </div>
+    </div>
+
+    <script>
+        function triggerAction(actionName) {
+            if (navigator.vibrate) {
+                navigator.vibrate(30); 
+            }
+
+            if (actionName === 'LP') {
+                const lp = document.getElementById('status-lp');
+                lp.innerText = lp.innerText === 'ON' ? 'OFF' : 'ON';
+            } 
+            if (actionName === 'Espada') {
+                updateCounter('count-sword', 4);
+            }
+            if (actionName === 'Puño') {
+                updateCounter('count-fist', 1);
+            }
+            if (actionName === 'Fuego') {
+                updateCounter('count-fire', 1);
+            }
+            if (actionName === 'Escudo') {
+                updateCounter('count-shield', 1);
+            }
+            if (actionName === 'Flechas') {
+                updateCounter('count-arrows', 15);
+            }
+        }
+
+        function updateCounter(elementId, max) {
+            const el = document.getElementById(elementId);
+            let current = parseInt(el.innerText.split('/')[0]);
+            current++; 
+            if (current > max) {
+                current = 0; 
+            }
+            el.innerText = current + "/" + max;
+        }
+    </script>
+</body>
+</html>
